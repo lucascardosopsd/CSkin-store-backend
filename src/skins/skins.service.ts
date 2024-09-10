@@ -14,7 +14,9 @@ export class SkinsService {
 
   findAll(findManySkinsDto: FindManySkinsDto) {
     let orderObj = {};
-    orderObj[findManySkinsDto.orderBy] = findManySkinsDto.order || 'asc';
+    if (findManySkinsDto.orderBy) {
+      orderObj[findManySkinsDto.orderBy] = findManySkinsDto?.order || 'asc';
+    }
 
     return this.prisma.skin.findMany({
       where: {
@@ -32,7 +34,7 @@ export class SkinsService {
           category: findManySkinsDto?.category,
         }),
       },
-      orderBy: orderObj,
+      ...(Object.entries(orderObj).length && { orderBy: orderObj }),
     });
   }
 
