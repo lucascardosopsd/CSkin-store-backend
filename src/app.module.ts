@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { SkinsModule } from './skins/skins.module';
 
 @Module({
-  imports: [],
+  imports: [SkinsModule],
   controllers: [],
   providers: [],
 })
