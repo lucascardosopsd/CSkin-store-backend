@@ -57,8 +57,14 @@ export class SkinsService {
     return this.prisma.skin.findFirst({ where: { id } });
   }
 
-  update(id: string, updateSkinDto: UpdateSkinDto) {
-    return this.prisma.skin.update({
+  async update(id: string, updateSkinDto: UpdateSkinDto) {
+    const exists = await this.prisma.skin.findFirst({ where: { id } });
+
+    if (!exists) {
+      throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
+    }
+
+    return await this.prisma.skin.update({
       where: { id },
       data: updateSkinDto,
     });
