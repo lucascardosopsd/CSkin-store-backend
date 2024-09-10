@@ -4,5 +4,6 @@ export class FindManySkinsDto {
   float?: number;
   name?: string;
   order?: 'asc' | 'desc';
+  orderBy?: 'name' | 'price' | 'float';
   category?: string;
 }
