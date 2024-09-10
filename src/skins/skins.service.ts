@@ -15,13 +15,19 @@ export class SkinsService {
   findAll(findManySkinsDto: FindManySkinsDto) {
     return this.prisma.skin.findMany({
       where: {
-        name: findManySkinsDto?.name && findManySkinsDto?.name,
+        ...(findManySkinsDto?.name && { name: findManySkinsDto?.name }),
         price: {
-          gte: findManySkinsDto?.startPrice || -Infinity,
-          lte: findManySkinsDto?.endPrice || Infinity,
+          ...(findManySkinsDto.startPrice && {
+            gte: +findManySkinsDto?.startPrice,
+          }),
+          ...(findManySkinsDto.endPrice && {
+            lte: +findManySkinsDto?.endPrice,
+          }),
         },
-        float: findManySkinsDto?.float && findManySkinsDto?.float,
-        category: findManySkinsDto?.category && findManySkinsDto?.category,
+        ...(findManySkinsDto?.float && { float: +findManySkinsDto?.float }),
+        ...(findManySkinsDto.category && {
+          category: findManySkinsDto?.category,
+        }),
       },
     });
   }
