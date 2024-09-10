@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSkinDto } from './dto/create-skin.dto';
 import { UpdateSkinDto } from './dto/update-skin.dto';
+import { PrismaService } from 'src/database/prisma.service';
+import { FindManySkinsDto } from './dto/find-many-skins.dto';
 
 @Injectable()
 export class SkinsService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createSkinDto: CreateSkinDto) {
-    return 'This action adds a new skin';
+    return this.prisma.skin.create({ data: createSkinDto });
   }
 
-  findAll() {
-    return `This action returns all skins`;
+  findAll(findManySkinsDto: FindManySkinsDto) {
+    return this.prisma.skin.findMany({
+      where: {
+        name: findManySkinsDto?.name && findManySkinsDto?.name,
+        price: {
+          gte: findManySkinsDto?.startPrice || -Infinity,
+          lte: findManySkinsDto?.endPrice || Infinity,
+        },
+        float: findManySkinsDto?.float && findManySkinsDto?.float,
+        category: findManySkinsDto?.category && findManySkinsDto?.category,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} skin`;
+  findOne(id: string) {
+    return this.prisma.skin.findFirst({ where: { id } });
   }
 
-  update(id: number, updateSkinDto: UpdateSkinDto) {
-    return `This action updates a #${id} skin`;
+  update(id: string, updateSkinDto: UpdateSkinDto) {
+    return this.prisma.skin.update({
+      where: { id },
+      data: updateSkinDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} skin`;
+  remove(id: string) {
+    return this.prisma.skin.delete({ where: { id } });
   }
 }
