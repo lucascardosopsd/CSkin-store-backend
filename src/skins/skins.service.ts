@@ -54,17 +54,17 @@ export class SkinsService {
   }
 
   async findOne(id: string) {
-    const exists = await this.prisma.skin.findFirst({ where: { id } });
+    const exists = await this.prisma.skin.findUnique({ where: { id } });
 
     if (!exists) {
       throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
     }
 
-    return await this.prisma.skin.findFirst({ where: { id } });
+    return await this.prisma.skin.findUnique({ where: { id } });
   }
 
   async update(id: string, updateSkinDto: UpdateSkinDto) {
-    const exists = await this.prisma.skin.findFirst({ where: { id } });
+    const exists = await this.prisma.skin.findUnique({ where: { id } });
 
     if (!exists) {
       throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ export class SkinsService {
   }
 
   async remove(id: string) {
-    const exists = await this.prisma.skin.findFirst({ where: { id } });
+    const exists = await this.prisma.skin.findUnique({ where: { id } });
 
     if (!exists) {
       throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
