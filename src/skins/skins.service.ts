@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateSkinDto } from './dto/create-skin.dto';
 import { UpdateSkinDto } from './dto/update-skin.dto';
 import { PrismaService } from 'src/database/prisma.service';
@@ -64,7 +64,13 @@ export class SkinsService {
     });
   }
 
-  remove(id: string) {
-    return this.prisma.skin.delete({ where: { id } });
+  async remove(id: string) {
+    const exists = await this.prisma.skin.findFirst({ where: { id } });
+
+    if (!exists) {
+      throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
+    }
+
+    return await this.prisma.skin.delete({ where: { id } });
   }
 }
