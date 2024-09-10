@@ -41,6 +41,9 @@ export class SkinsService {
           category: findManySkinsDto?.category,
         }),
       },
+      orderBy: {
+        name: 'asc',
+      },
       ...(Object.entries(orderObj).length && { orderBy: orderObj }),
     });
 
