@@ -6,4 +6,6 @@ export class FindManySkinsDto {
   order?: 'asc' | 'desc';
   orderBy?: 'name' | 'price' | 'float';
   category?: string;
+  page: number;
+  take: number;
 }

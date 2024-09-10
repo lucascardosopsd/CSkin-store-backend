@@ -12,13 +12,20 @@ export class SkinsService {
     return this.prisma.skin.create({ data: createSkinDto });
   }
 
-  findAll(findManySkinsDto: FindManySkinsDto) {
+  async findAll(findManySkinsDto: FindManySkinsDto) {
+    const count = await this.prisma.skin.count();
+    const pages = Math.ceil(count / Number(findManySkinsDto.take));
+
+    const skip = findManySkinsDto.page * Number(findManySkinsDto.take);
+
     let orderObj = {};
     if (findManySkinsDto.orderBy) {
       orderObj[findManySkinsDto.orderBy] = findManySkinsDto?.order || 'asc';
     }
 
-    return this.prisma.skin.findMany({
+    const skins = await this.prisma.skin.findMany({
+      skip: skip,
+      take: Number(findManySkinsDto.take),
       where: {
         ...(findManySkinsDto?.name && { name: findManySkinsDto?.name }),
         price: {
@@ -36,6 +43,11 @@ export class SkinsService {
       },
       ...(Object.entries(orderObj).length && { orderBy: orderObj }),
     });
+
+    return {
+      skins,
+      pages,
+    };
   }
 
   findOne(id: string) {
