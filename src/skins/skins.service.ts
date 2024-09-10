@@ -53,8 +53,14 @@ export class SkinsService {
     };
   }
 
-  findOne(id: string) {
-    return this.prisma.skin.findFirst({ where: { id } });
+  async findOne(id: string) {
+    const exists = await this.prisma.skin.findFirst({ where: { id } });
+
+    if (!exists) {
+      throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
+    }
+
+    return await this.prisma.skin.findFirst({ where: { id } });
   }
 
   async update(id: string, updateSkinDto: UpdateSkinDto) {
