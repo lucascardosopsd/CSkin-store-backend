@@ -17,10 +17,7 @@ Projeto desenvolvido para o desafio da empresa CSkin Store com o intuito ser uma
 ### Requisitos
 
 - Nodejs v20+
-- Docker 27+
 - Yarn 1.22+
-- NPM 10.8+
-- WSL (Windows)
 
 ---
 
