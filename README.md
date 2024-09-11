@@ -1,6 +1,6 @@
 # Desafio CSkin Store
 
-Projeto desenvolvido para o desafio da empresa CSkin, que visa ser uma API de CRUD de skins de cs.
+Projeto desenvolvido para o desafio da empresa CSkin Store com o intuito ser uma API de CRUD de skins de cs.
 
 ---
 
