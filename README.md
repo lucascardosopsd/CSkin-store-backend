@@ -171,7 +171,7 @@ Para rodar basta digitar o comando `yarn test:int` no terminal do projeto
 
 ---
 
-### Considerações Tecnicas
+### Considerações Técnicas
 
 - O uso do Docker não foi viável em conjunto com o Prisma devido a um erro, sendo recomendado pelo próprio Prisma o uso do mongo db atlas [neste link](https://www.prisma.io/docs/orm/overview/databases/mongodb#replica-set-configuration)
 - Na descrição do desafio é pedido para que se use o campo `float` do model item como string, mas optei por atribuir o tipo `Float` para que não houvesse necessidade de conversões posteriores
