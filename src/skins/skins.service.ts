@@ -27,7 +27,12 @@ export class SkinsService {
       skip: skip,
       take: Number(findManySkinsDto.take),
       where: {
-        ...(findManySkinsDto?.name && { name: findManySkinsDto?.name }),
+        ...(findManySkinsDto?.name && {
+          name: {
+            contains: findManySkinsDto.name,
+            mode: 'insensitive',
+          },
+        }),
         price: {
           ...(findManySkinsDto.startPrice && {
             gte: +findManySkinsDto?.startPrice,
