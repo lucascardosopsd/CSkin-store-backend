@@ -1,4 +1,4 @@
-# Desafio CSkin Store
+# Desafio CSkin Store (Back-end)
 
 Projeto desenvolvido para o desafio da empresa CSkin Store com o intuito ser uma API de CRUD de skins de cs.
 
