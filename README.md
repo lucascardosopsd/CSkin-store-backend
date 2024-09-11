@@ -1,85 +1,181 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Desafio CSkin Store
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Projeto desenvolvido para o desafio da empresa CSkin, que visa ser uma API de CRUD de skins de cs.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+### Tecnologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Nestjs
+- Prisma ORM
+- Jest
+- Nodejs
+- Mongodb
 
-## Project setup
+---
 
-```bash
-$ yarn install
+### Requisitos
+
+- Node v20+
+- Docker 27+
+- Yarn 1.22+
+- NPM 10.8+
+- WSL (Windows)
+
+---
+
+### Como rodar
+
+1. Abra o terminal na pasta do projeto e digite `yarn install && yarn prisma db push`
+2. Crie uma conta no mongo db atlas e cole a URI no .env atribuindo o valor a variável de ambiente `DATABASE_URL=` ou copie e cole a variável + URI abaixo
+
+   ```jsx
+   DATABASE_URL =
+     'mongodb+srv://lucascardosopsd:Y2N5pQTDFR8PWlX3@cluster0.7aa65.mongodb.net/dev?retryWrites=true&w=majority&appName=Cluster0';
+   ```
+
+   Caso prefira usar credênciais próprias existe a possibilidade de popular o banco com o comando `yarn seed`
+
+3. Inicie a aplicação digitando no terminal `yarn start:dev`
+
+A aplicação rodará na porta 3333
+
+---
+
+### Rotas
+
+**GET** `/skins` (Paginação)
+
+```jsx
+Params:{
+	startPrice?: number;
+  endPrice?: number;
+  float?: number;
+  name?: string;
+  order?: 'asc' | 'desc';
+  orderBy?: 'name' | 'price' | 'float';
+  category?: string;
+  page: number;
+  take: number;
+}
+
+Return:{
+	skins:[
+		id: string
+		image: string
+		category: string
+		float: number
+		price: number
+		createdAt: string
+		updatedAt: string
+	],
+	pages: number
+}
 ```
 
-## Compile and run the project
+**GET** `/skins/:id`
 
-```bash
-# development
-$ yarn run start
+```jsx
+Params:{
+	id: string
+}
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+Return:{
+	skins:[
+		id: string
+		image: string
+		category: string
+		float: number
+		price: number
+		createdAt: string
+		updatedAt: string
+	]
+}
 ```
 
-## Run tests
+**POST** `/skins`
 
-```bash
-# unit tests
-$ yarn run test
+```jsx
 
-# e2e tests
-$ yarn run test:e2e
+body:[
+	image: string
+	category: string
+	float: number
+	price: number
+]
 
-# test coverage
-$ yarn run test:cov
+Return:{
+		id: string
+		image: string
+		category: string
+		float: number
+		price: number
+		createdAt: string
+		updatedAt: string
+}
 ```
 
-## Resources
+**PATCH** `/skins/:id`
 
-Check out a few resources that may come in handy when working with NestJS:
+```jsx
+Params:{
+	id: string
+}
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+body:[
+	image: string
+	category: string
+	float: number
+	price: number
+]
 
-## Support
+Return:{
+		id: string
+		image: string
+		category: string
+		float: number
+		price: number
+		createdAt: string
+		updatedAt: string
+}
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**DELETE**: `/skins/:id`
 
-## Stay in touch
+```jsx
+Params: {
+  id: string;
+}
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Return: {
+  id: string;
+  image: string;
+  category: string;
+  float: number;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+}
+```
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Testes
+
+Os testes foram do tipo integração e abordaram as seguintes funcionalidades:
+
+- Create skin
+- Update skin
+- Patch skin
+- Update skin
+- Get many skins (Paginação)
+
+Para rodar basta digitar o comando `yarn test:int` no terminal do projeto
+
+---
+
+### Considerações Tecnicas
+
+- O uso do Docker não foi viável em conjunto com o Prisma devido a um erro, sendo recomendado pelo próprio Prisma o uso do mongo db atlas [neste link](https://www.prisma.io/docs/orm/overview/databases/mongodb#replica-set-configuration)
+- Na descrição do desafio é pedido para que se use o campo `float` do model item como string, mas optei por atribuir o tipo `Float` para que não houvesse necessidade de conversões posteriores
+- Na descrição do desafio é pedido para que o model se chame `Item`, porém optei por utiliar o nome `Skin` para que ficasse mais claro
