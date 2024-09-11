@@ -21,7 +21,7 @@ Projeto desenvolvido para o desafio da empresa CSkin Store com o intuito ser uma
 
 ---
 
-### Como rodar
+### Como Rodar
 
 1. Abra o terminal na pasta do projeto e digite `yarn install && yarn prisma db push`
 2. Crie uma conta no mongo db atlas e cole a URI no .env atribuindo o valor a variável de ambiente `DATABASE_URL=` ou copie e cole a variável + URI abaixo
