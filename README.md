@@ -27,8 +27,7 @@ Projeto desenvolvido para o desafio da empresa CSkin Store com o intuito ser uma
 2. Crie uma conta no mongo db atlas e cole a URI no .env atribuindo o valor a variável de ambiente `DATABASE_URL=` ou copie e cole a variável + URI abaixo
 
    ```jsx
-   DATABASE_URL =
-     'mongodb+srv://lucascardosopsd:Y2N5pQTDFR8PWlX3@cluster0.7aa65.mongodb.net/dev?retryWrites=true&w=majority&appName=Cluster0';
+   DATABASE_URL='mongodb+srv://lucascardosopsd:Y2N5pQTDFR8PWlX3@cluster0.7aa65.mongodb.net/dev?retryWrites=true&w=majority&appName=Cluster0'
    ```
 
    Caso prefira usar credênciais próprias existe a possibilidade de popular o banco com o comando `yarn seed`
